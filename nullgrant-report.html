@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NullGrant report - https://localhost:54071</title>
+<style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 32px 20px; background: #0f1115; color: #e6e8ee;
+       font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+.wrap { max-width: 980px; margin: 0 auto; }
+h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.02em; }
+h2 { font-size: 18px; margin: 34px 0 12px; padding-bottom: 8px;
+     border-bottom: 1px solid #262b36; letter-spacing: -0.01em; }
+.sub { color: #98a2b3; font-size: 13px; margin-bottom: 24px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 18px 0; }
+.stat { background: #171a21; border: 1px solid #262b36; border-radius: 10px; padding: 12px 14px; }
+.stat .n { font-size: 24px; font-weight: 650; letter-spacing: -0.02em; }
+.stat .l { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #98a2b3; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0 4px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid #20242e; vertical-align: top; }
+th { color: #98a2b3; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+tr:last-child td { border-bottom: none; }
+.card { background: #171a21; border: 1px solid #262b36; border-radius: 12px;
+        padding: 16px 18px; margin: 12px 0; }
+.card.FAIL { border-left: 4px solid #f4525e; }
+.card.WARN { border-left: 4px solid #f2a33c; }
+.card.PASS { border-left: 4px solid #3ecf8e; }
+.card.INDETERMINATE { border-left: 4px solid #7c8db5; }
+.card.INFO { border-left: 4px solid #4b5568; }
+.ct { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.badge { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+         padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.badge.FAIL { background: #3a1418; color: #ff8f99; }
+.badge.WARN { background: #3a2a10; color: #ffc46b; }
+.badge.PASS { background: #0f3327; color: #5fe0a8; }
+.badge.INDETERMINATE { background: #1e2433; color: #9fb0d6; }
+.badge.INFO { background: #1e2129; color: #9aa3b5; }
+.sev { font-size: 10.5px; letter-spacing: 0.08em; color: #98a2b3; text-transform: uppercase; }
+.title { font-size: 16px; font-weight: 620; }
+.summary { color: #c3c9d6; margin: 8px 0 0; }
+.fix { margin: 12px 0 0; padding: 10px 12px; background: #12161d;
+       border-radius: 8px; font-size: 13.5px; color: #c3c9d6; }
+.fix b { color: #e6e8ee; }
+.refs { margin-top: 8px; font-size: 12px; color: #7c8db5; }
+.cid { font-size: 11px; color: #7c8db5; margin-left: auto; }
+.cid code { background: #12161d; padding: 1px 5px; border-radius: 4px; }
+details { margin-top: 12px; }
+summary { cursor: pointer; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;
+          color: #98a2b3; user-select: none; }
+summary:hover { color: #e6e8ee; }
+pre { margin: 8px 0 0; padding: 12px; background: #0b0d12; border: 1px solid #20242e;
+      border-radius: 8px; overflow-x: auto; font-size: 12px; line-height: 1.5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #c3c9d6; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.banner { background: #171a21; border: 1px solid #262b36; border-radius: 12px; padding: 16px 18px; }
+.banner table { margin: 0; }
+.note { font-size: 12.5px; color: #7c8db5; margin-top: 22px; padding-top: 14px;
+        border-top: 1px solid #20242e; }
+</style></head><body><div class="wrap">
+<h1>NullGrant audit report</h1>
+<div class="sub">Authorization server configuration audit &middot; generated
+2026-11-22 17:51:11 UTC &middot; NullGrant v1.0.0</div>
+
+<div class="grid">
+  <div class="stat"><div class="n" style="color:#ff8f99">0</div><div class="l">Fail</div></div>
+  <div class="stat"><div class="n" style="color:#ffc46b">1</div><div class="l">Warn</div></div>
+  <div class="stat"><div class="n" style="color:#5fe0a8">10</div><div class="l">Pass</div></div>
+  <div class="stat"><div class="n" style="color:#9fb0d6">0</div><div class="l">Indeterminate</div></div>
+  <div class="stat"><div class="n">46</div><div class="l">Requests</div></div>
+</div>
+
+<h2>Target</h2>
+<div class="banner"><table>
+<tr><th>Issuer</th><td><code>https://localhost:54071</code></td></tr>
+<tr><th>Client</th><td><code>lab-client</code> (public)</td></tr>
+<tr><th>Registered redirect URI</th><td><code>http://localhost:9999/callback</code></td></tr>
+<tr><th>Authorization endpoint</th><td><code>https://localhost:54071/authorize</code></td></tr>
+<tr><th>Token endpoint</th><td><code>https://localhost:54071/token</code></td></tr>
+<tr><th>JWKS URI</th><td><code>https://localhost:54071/jwks.json</code></td></tr>
+<tr><th>Metadata source</th><td><code>https://localhost:54071/.well-known/openid-configuration</code></td></tr>
+<tr><th>Metadata error</th><td><code>-</code></td></tr>
+</table></div>
+
+<h2>Findings</h2>
+
+<div class="card WARN">
+  <div class="ct">
+    <span class="badge WARN">warn</span>
+    <span class="title">Token endpoint client authentication and error hygiene</span>
+    <span class="sev">MEDIUM</span>
+    <span class="cid"><code>--checks token-auth</code> &middot; <code>token-endpoint-auth</code></span>
+  </div>
+  <p class="summary">To verify (not observable externally): The refresh_token grant is advertised and this is a public client. Verify that refresh tokens are sender-constrained, or rotated on every use with reuse detection (RFC 9700 s2.2.2). This cannot be confirmed by external probing.</p>
+  <div class="fix"><b>Remediation.</b> Authenticate every client at the token endpoint, return error=invalid_client for failed authentication, and keep error responses free of stack traces. For public clients, use rotating sender-constrained refresh tokens.</div><div class="refs">References: RFC 9700 s2.1.1, s2.2.2, RFC 6749 s2.3, RFC 6819 s5.1.4</div>
+  <details><summary>Evidence (4 blocks)</summary>
+  <pre>[
+  {
+    &quot;token_endpoint&quot;: &quot;https://localhost:54071/token&quot;,
+    &quot;client_type&quot;: &quot;public&quot;
+  },
+  {
+    &quot;probe&quot;: &quot;POST token endpoint, no client authentication, deliberately invalid code&quot;,
+    &quot;http_status&quot;: 400,
+    &quot;error&quot;: &quot;invalid_request&quot;,
+    &quot;error_description&quot;: &quot;code_verifier required&quot;,
+    &quot;issued_access_token&quot;: false,
+    &quot;internal_detail&quot;: []
+  },
+  {
+    &quot;grant_types_supported&quot;: [
+      &quot;authorization_code&quot;,
+      &quot;refresh_token&quot;
+    ]
+  },
+  {
+    &quot;problems&quot;: [],
+    &quot;advisories&quot;: [
+      &quot;The refresh_token grant is advertised and this is a public client. Verify that refresh tokens are sender-constrained, or rotated on every use with reuse detection (RFC 9700 s2.2.2). This cannot be confirmed by external probing.&quot;
+    ]
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">TLS, discovery document and advertised capabilities</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks discovery</code> &middot; <code>discovery-transport</code></span>
+  </div>
+  <p class="summary">Endpoints are HTTPS and the discovery document is internally consistent.</p>
+  <div class="refs">References: RFC 8414, RFC 9700 s2.1, OpenID Connect Discovery 1.0</div>
+  <details><summary>Evidence (7 blocks)</summary>
+  <pre>[
+  {
+    &quot;issuer&quot;: &quot;https://localhost:54071&quot;,
+    &quot;metadata_source&quot;: &quot;https://localhost:54071/.well-known/openid-configuration&quot;,
+    &quot;metadata_error&quot;: null,
+    &quot;authorization_endpoint&quot;: &quot;https://localhost:54071/authorize&quot;,
+    &quot;token_endpoint&quot;: &quot;https://localhost:54071/token&quot;,
+    &quot;jwks_uri&quot;: &quot;https://localhost:54071/jwks.json&quot;,
+    &quot;client_type&quot;: &quot;public&quot;
+  },
+  {
+    &quot;response_types_supported&quot;: [
+      &quot;code&quot;
+    ]
+  },
+  {
+    &quot;code_challenge_methods_supported&quot;: [
+      &quot;S256&quot;
+    ]
+  },
+  {
+    &quot;grant_types_supported&quot;: [
+      &quot;authorization_code&quot;,
+      &quot;refresh_token&quot;
+    ]
+  },
+  {
+    &quot;token_endpoint_auth_methods_supported&quot;: [
+      &quot;client_secret_basic&quot;,
+      &quot;none&quot;
+    ]
+  },
+  {
+    &quot;tls_client_certificate_bound_access_tokens&quot;: null,
+    &quot;mtls_endpoint_aliases&quot;: null,
+    &quot;authorization_signing_alg_values_supported&quot;: null
+  },
+  {
+    &quot;problems&quot;: []
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">Error response hygiene and information disclosure</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks error-hygiene</code> &middot; <code>error-hygiene</code></span>
+  </div>
+  <p class="summary">All 4 malformed-request probe(s) produced clean, standard error responses with no implementation detail.</p>
+  <div class="refs">References: RFC 6749 s5.2, RFC 6819 s5.1.4</div>
+  <details><summary>Evidence (2 blocks)</summary>
+  <pre>[
+  {
+    &quot;probes&quot;: [
+      {
+        &quot;probe&quot;: &quot;authorization endpoint, unknown client_id&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;body_snippet&quot;: &quot;{\&quot;error\&quot;: \&quot;unauthorized_client\&quot;}&quot;,
+        &quot;internal_detail&quot;: [],
+        &quot;server_header&quot;: &quot;MockAS/0.1 Python/3.13.18&quot;,
+        &quot;security_headers&quot;: {
+          &quot;strict-transport-security&quot;: null,
+          &quot;x-content-type-options&quot;: null,
+          &quot;x-frame-options&quot;: null,
+          &quot;content-security-policy&quot;: null
+        }
+      },
+      {
+        &quot;probe&quot;: &quot;authorization endpoint, missing required parameters&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;body_snippet&quot;: &quot;{\&quot;error\&quot;: \&quot;unauthorized_client\&quot;}&quot;,
+        &quot;internal_detail&quot;: [],
+        &quot;server_header&quot;: &quot;MockAS/0.1 Python/3.13.18&quot;,
+        &quot;security_headers&quot;: {
+          &quot;strict-transport-security&quot;: null,
+          &quot;x-content-type-options&quot;: null,
+          &quot;x-frame-options&quot;: null,
+          &quot;content-security-policy&quot;: null
+        }
+      },
+      {
+        &quot;probe&quot;: &quot;authorization endpoint, unknown parameter pollution&quot;,
+        &quot;http_status&quot;: 302,
+        &quot;body_snippet&quot;: &quot;&quot;,
+        &quot;internal_detail&quot;: [],
+        &quot;server_header&quot;: &quot;MockAS/0.1 Python/3.13.18&quot;,
+        &quot;security_headers&quot;: {
+          &quot;strict-transport-security&quot;: null,
+          &quot;x-content-type-options&quot;: null,
+          &quot;x-frame-options&quot;: null,
+          &quot;content-security-policy&quot;: null
+        }
+      },
+      {
+        &quot;probe&quot;: &quot;token endpoint, unsupported grant_type&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;body_snippet&quot;: &quot;{\&quot;error\&quot;: \&quot;unsupported_grant_type\&quot;}&quot;,
+        &quot;internal_detail&quot;: [],
+        &quot;server_header&quot;: &quot;MockAS/0.1 Python/3.13.18&quot;,
+        &quot;security_headers&quot;: {
+          &quot;strict-transport-security&quot;: null,
+          &quot;x-content-type-options&quot;: null,
+          &quot;x-frame-options&quot;: null,
+          &quot;content-security-policy&quot;: null
+        }
+      }
+    ]
+  },
+  {
+    &quot;problems&quot;: [],
+    &quot;reachable_probes&quot;: 4,
+    &quot;unreachable_probes&quot;: []
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">Token introspection endpoint behaviour</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks introspection</code> &middot; <code>introspection</code></span>
+  </div>
+  <p class="summary">Introspection requires client authentication and disclosed only standard fields: active, client_id, exp, iat, scope, sub, token_type.</p>
+  <div class="refs">References: RFC 7662 s2.1, s2.2, s4</div>
+  <details><summary>Evidence (4 blocks)</summary>
+  <pre>[
+  {
+    &quot;introspection_endpoint&quot;: &quot;https://localhost:54071/introspect&quot;,
+    &quot;token_supplied&quot;: &quot;&lt;redacted len=23 at-l...&gt;&quot;,
+    &quot;client_type&quot;: &quot;public&quot;
+  },
+  {
+    &quot;step&quot;: &quot;A. POST with token and NO client authentication&quot;,
+    &quot;http_status&quot;: 401,
+    &quot;transport_error&quot;: null,
+    &quot;authenticated&quot;: false,
+    &quot;error&quot;: &quot;invalid_client&quot;,
+    &quot;active&quot;: null,
+    &quot;fields_returned&quot;: [
+      &quot;error&quot;
+    ],
+    &quot;body&quot;: {
+      &quot;error&quot;: &quot;invalid_client&quot;
+    },
+    &quot;internal_detail&quot;: []
+  },
+  {
+    &quot;step&quot;: &quot;B. POST with token and client authentication&quot;,
+    &quot;http_status&quot;: 200,
+    &quot;transport_error&quot;: null,
+    &quot;authenticated&quot;: true,
+    &quot;error&quot;: null,
+    &quot;active&quot;: true,
+    &quot;fields_returned&quot;: [
+      &quot;active&quot;,
+      &quot;client_id&quot;,
+      &quot;exp&quot;,
+      &quot;iat&quot;,
+      &quot;scope&quot;,
+      &quot;sub&quot;,
+      &quot;token_type&quot;
+    ],
+    &quot;body&quot;: {
+      &quot;active&quot;: true,
+      &quot;scope&quot;: &quot;openid profile&quot;,
+      &quot;client_id&quot;: &quot;lab-client&quot;,
+      &quot;token_type&quot;: &quot;Bearer&quot;,
+      &quot;sub&quot;: &quot;lab-user-1&quot;,
+      &quot;iat&quot;: 1700000000,
+      &quot;exp&quot;: 9999999999
+    },
+    &quot;internal_detail&quot;: []
+  },
+  {
+    &quot;problems&quot;: [],
+    &quot;disclosed_when_authenticated&quot;: [
+      &quot;active&quot;,
+      &quot;client_id&quot;,
+      &quot;exp&quot;,
+      &quot;iat&quot;,
+      &quot;scope&quot;,
+      &quot;sub&quot;,
+      &quot;token_type&quot;
+    ]
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">JWK Set hygiene</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks jwks</code> &middot; <code>jwks-hygiene</code></span>
+  </div>
+  <p class="summary">JWKS published 1 key(s), all public and adequately sized.</p>
+  <div class="refs">References: RFC 7517, RFC 7518 s3.3, RFC 9700 s2.1</div>
+  <details><summary>Evidence (4 blocks)</summary>
+  <pre>[
+  {
+    &quot;jwks_uri&quot;: &quot;https://localhost:54071/jwks.json&quot;,
+    &quot;http_status&quot;: 200
+  },
+  {
+    &quot;published_keys&quot;: [
+      {
+        &quot;kty&quot;: &quot;RSA&quot;,
+        &quot;kid&quot;: &quot;k-2026-01&quot;,
+        &quot;alg&quot;: &quot;RS256&quot;,
+        &quot;use&quot;: &quot;sig&quot;,
+        &quot;crv&quot;: null,
+        &quot;rsa_modulus_bits&quot;: 2048
+      }
+    ],
+    &quot;key_count&quot;: 1
+  },
+  {
+    &quot;internal_detail&quot;: []
+  },
+  {
+    &quot;problems&quot;: []
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">Proof Key for Code Exchange (PKCE) enforcement</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks pkce</code> &middot; <code>pkce-enforcement</code></span>
+  </div>
+  <p class="summary">PKCE is enforced: a request with no code_challenge was rejected, and &#x27;plain&#x27;, undersized, non-base64url and unknown-method challenges were all refused.</p>
+  <div class="refs">References: RFC 7636, RFC 9700 s2.1.2, RFC 8252 s8.3</div>
+  <details><summary>Evidence (9 blocks)</summary>
+  <pre>[
+  {
+    &quot;client_type&quot;: &quot;public&quot;,
+    &quot;authorization_endpoint&quot;: &quot;https://localhost:54071/authorize&quot;
+  },
+  {
+    &quot;code_challenge_methods_supported&quot;: [
+      &quot;S256&quot;
+    ]
+  },
+  {
+    &quot;probe&quot;: &quot;pkce-absent&quot;,
+    &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;state=oa-aMP7Q0UN2cOv_KMe&quot;,
+    &quot;status&quot;: 302,
+    &quot;state_sent&quot;: &quot;oa-aMP7Q0UN2cOv_KMe&quot;,
+    &quot;location&quot;: &quot;http://localhost:9999/callback?error=invalid_request&amp;error_description=code_challenge+is+required&amp;state=oa-aMP7Q0UN2cOv_KMe&quot;,
+    &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+    &quot;to_client&quot;: true,
+    &quot;equivalent_to_registered&quot;: true,
+    &quot;query&quot;: {
+      &quot;error&quot;: &quot;invalid_request&quot;,
+      &quot;error_description&quot;: &quot;code_challenge is required&quot;,
+      &quot;state&quot;: &quot;oa-aMP7Q0UN2cOv_KMe&quot;
+    },
+    &quot;fragment&quot;: {},
+    &quot;error&quot;: &quot;invalid_request&quot;,
+    &quot;has_code&quot;: false,
+    &quot;tokens_in_query&quot;: [],
+    &quot;tokens_in_fragment&quot;: [],
+    &quot;state_echo&quot;: &quot;oa-aMP7Q0UN2cOv_KMe&quot;
+  },
+  {
+    &quot;probe&quot;: &quot;pkce-plain&quot;,
+    &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;state=oa-XlZIU9m8L_28Gc1h&amp;code_challenge=rW_Au3xREieUwwZsG4-pmLA4dA_bnNhc4Te40HN01GMfw1phQyBvmg_MFTzY6hbA&amp;code_challenge_method=plain&quot;,
+    &quot;status&quot;: 302,
+    &quot;state_sent&quot;: &quot;oa-XlZIU9m8L_28Gc1h&quot;,
+    &quot;location&quot;: &quot;http://localhost:9999/callback?error=invalid_request&amp;error_description=only+S256+is+supported&amp;state=oa-XlZIU9m8L_28Gc1h&quot;,
+    &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+    &quot;to_client&quot;: true,
+    &quot;equivalent_to_registered&quot;: true,
+    &quot;query&quot;: {
+      &quot;error&quot;: &quot;invalid_request&quot;,
+      &quot;error_description&quot;: &quot;only S256 is supported&quot;,
+      &quot;state&quot;: &quot;oa-XlZIU9m8L_28Gc1h&quot;
+    },
+    &quot;fragment&quot;: {},
+    &quot;error&quot;: &quot;invalid_request&quot;,
+    &quot;has_code&quot;: false,
+    &quot;tokens_in_query&quot;: [],
+    &quot;tokens_in_fragment&quot;: [],
+    &quot;state_echo&quot;: &quot;oa-XlZIU9m8L_28Gc1h&quot;
+  },
+  {
+    &quot;probe&quot;: &quot;pkce-short-challenge&quot;,
+    &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;state=oa-kqjlIx3l7AkA24Tk&amp;code_challenge=short&amp;code_challenge_method=S256&quot;,
+    &quot;status&quot;: 302,
+    &quot;state_sent&quot;: &quot;oa-kqjlIx3l7AkA24Tk&quot;,
+    &quot;location&quot;: &quot;http://localhost:9999/callback?error=invalid_request&amp;error_description=code_challenge+must+be+43-128+characters&amp;state=oa-kqjlIx3l7AkA24Tk&quot;,
+    &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+    &quot;to_client&quot;: true,
+    &quot;equivalent_to_registered&quot;: true,
+    &quot;query&quot;: {
+      &quot;error&quot;: &quot;invalid_request&quot;,
+      &quot;error_description&quot;: &quot;code_challenge must be 43-128 characters&quot;,
+      &quot;state&quot;: &quot;oa-kqjlIx3l7AkA24Tk&quot;
+    },
+    &quot;fragment&quot;: {},
+    &quot;error&quot;: &quot;invalid_request&quot;,
+    &quot;has_code&quot;: false,
+    &quot;tokens_in_query&quot;: [],
+    &quot;tokens_in_fragment&quot;: [],
+    &quot;state_echo&quot;: &quot;oa-kqjlIx3l7AkA24Tk&quot;
+  },
+  {
+    &quot;probe&quot;: &quot;pkce-invalid-encoding&quot;,
+    &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;state=oa-X0dNM_HcCxogd2vA&amp;code_challenge=%21%21%21not-base64url%21%21%21&amp;code_challenge_method=S256&quot;,
+    &quot;status&quot;: 302,
+    &quot;state_sent&quot;: &quot;oa-X0dNM_HcCxogd2vA&quot;,
+    &quot;location&quot;: &quot;http://localhost:9999/callback?error=invalid_request&amp;error_description=code_challenge+must+be+43-128+characters&amp;state=oa-X0dNM_HcCxogd2vA&quot;,
+    &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+    &quot;to_client&quot;: true,
+    &quot;equivalent_to_registered&quot;: true,
+    &quot;query&quot;: {
+      &quot;error&quot;: &quot;invalid_request&quot;,
+      &quot;error_description&quot;: &quot;code_challenge must be 43-128 characters&quot;,
+      &quot;state&quot;: &quot;oa-X0dNM_HcCxogd2vA&quot;
+    },
+    &quot;fragment&quot;: {},
+    &quot;error&quot;: &quot;invalid_request&quot;,
+    &quot;has_code&quot;: false,
+    &quot;tokens_in_query&quot;: [],
+    &quot;tokens_in_fragment&quot;: [],
+    &quot;state_echo&quot;: &quot;oa-X0dNM_HcCxogd2vA&quot;
+  },
+  {
+    &quot;probe&quot;: &quot;pkce-bogus-method&quot;,
+    &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;state=oa-lLhsLVSnv5y-JfEY&amp;code_challenge=bogus-method&amp;code_challenge_method=bogus-method&quot;,
+    &quot;status&quot;: 302,
+    &quot;state_sent&quot;: &quot;oa-lLhsLVSnv5y-JfEY&quot;,
+    &quot;location&quot;: &quot;http://localhost:9999/callback?error=invalid_request&amp;error_description=only+S256+is+supported&amp;state=oa-lLhsLVSnv5y-JfEY&quot;,
+    &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+    &quot;to_client&quot;: true,
+    &quot;equivalent_to_registered&quot;: true,
+    &quot;query&quot;: {
+      &quot;error&quot;: &quot;invalid_request&quot;,
+      &quot;error_description&quot;: &quot;only S256 is supported&quot;,
+      &quot;state&quot;: &quot;oa-lLhsLVSnv5y-JfEY&quot;
+    },
+    &quot;fragment&quot;: {},
+    &quot;error&quot;: &quot;invalid_request&quot;,
+    &quot;has_code&quot;: false,
+    &quot;tokens_in_query&quot;: [],
+    &quot;tokens_in_fragment&quot;: [],
+    &quot;state_echo&quot;: &quot;oa-lLhsLVSnv5y-JfEY&quot;
+  },
+  {
+    &quot;probe&quot;: &quot;token exchange of a real code with NO code_verifier&quot;,
+    &quot;status&quot;: 400,
+    &quot;error&quot;: &quot;invalid_request&quot;,
+    &quot;issued_token&quot;: false
+  },
+  {
+    &quot;problems&quot;: [],
+    &quot;notes&quot;: [
+      &quot;Server rejected the PKCE-less request with error=invalid_request&quot;,
+      &quot;Server rejected &#x27;plain&#x27; with error=invalid_request&quot;,
+      &quot;Server rejected the undersized code_challenge&quot;,
+      &quot;Server rejected a malformed code_challenge&quot;,
+      &quot;Server rejected an unknown code_challenge_method&quot;
+    ],
+    &quot;live_probe_results&quot;: {
+      &quot;pkce_absent&quot;: &quot;rejected&quot;,
+      &quot;plain_method&quot;: &quot;rejected&quot;,
+      &quot;short_challenge&quot;: &quot;rejected&quot;,
+      &quot;non_base64url_challenge&quot;: &quot;rejected&quot;,
+      &quot;unknown_method&quot;: &quot;rejected&quot;
+    },
+    &quot;token_endpoint_probe&quot;: {
+      &quot;probe&quot;: &quot;token exchange of a real code with NO code_verifier&quot;,
+      &quot;status&quot;: 400,
+      &quot;error&quot;: &quot;invalid_request&quot;,
+      &quot;issued_token&quot;: false
+    }
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">Strict redirect_uri validation (open redirection)</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks redirect</code> &middot; <code>redirect-uri-strictness</code></span>
+  </div>
+  <p class="summary">16 of 17 redirect_uri variant(s) were rejected and 1 resolved to the exact registered URI. No non-identical URI was accepted. Note: 3 benign-equivalent variant(s) (case-change, fragment-append, query-append) were also refused; that is stricter than required but not a weakness.</p>
+  <div class="refs">References: RFC 6749 s3.1.2.3, s4.1.3, RFC 9700 s2.1.3, RFC 8252 s7.3</div>
+  <details><summary>Evidence (7 blocks)</summary>
+  <pre>[
+  {
+    &quot;registered_redirect_uri&quot;: &quot;http://localhost:9999/callback&quot;,
+    &quot;registered_host&quot;: &quot;localhost&quot;,
+    &quot;authorization_endpoint&quot;: &quot;https://localhost:54071/authorize&quot;,
+    &quot;variants_tested&quot;: 17
+  },
+  {
+    &quot;rejected&quot;: [
+      {
+        &quot;variant&quot;: &quot;trailing-slash&quot;,
+        &quot;description&quot;: &quot;Trailing slash appended&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback/&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-zDGXmPvRcsbMRhbG&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;path-suffix&quot;,
+        &quot;description&quot;: &quot;Extra path segment appended (prefix matching flaw)&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback/attacker&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-Q_aeYKiL5eNxUzId&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;dot-segment-escape&quot;,
+        &quot;description&quot;: &quot;Dot-segment path traversal past the registered path&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback/../attacker&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-G7ji8Ayln0LJQqJw&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;encoded-traversal&quot;,
+        &quot;description&quot;: &quot;Percent-encoded traversal (parser-differential flaw)&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback%2f..%2f..%2fattacker&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-1yQs1l-lvQuu41BY&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;subdomain-confusion&quot;,
+        &quot;description&quot;: &quot;Registered host used as a label of an attacker domain&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost.evil-audit.invalid:9999/callback&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-z0sBoRj1erxp0IJb&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;host-swap&quot;,
+        &quot;description&quot;: &quot;Completely different host&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://evil-audit.invalid:9999/callback&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-iI_08b8y67fGj4dy&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;userinfo-override&quot;,
+        &quot;description&quot;: &quot;Userinfo component to confuse host parsing&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost@evil-audit.invalid:9999/callback&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-C6JELF1uE8_VA-Dk&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;backslash-override&quot;,
+        &quot;description&quot;: &quot;Backslash separator (browser/URllib parsing differential)&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost\\@evil-audit.invalid:9999/callback&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-bMpY9Yuw31da4S9e&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;port-change&quot;,
+        &quot;description&quot;: &quot;Different port on the same host&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:8443/callback&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-pSxReY2gOFCONg5U&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;case-change&quot;,
+        &quot;description&quot;: &quot;Scheme and host upper-cased&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;HTTP://LOCALHOST:9999/callback&quot;,
+        &quot;expected&quot;: &quot;accept&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-5KIm47odV7CnOqNy&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;protocol-relative&quot;,
+        &quot;description&quot;: &quot;Protocol-relative URL&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;//evil-audit.invalid/callback&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-qSiQ5xBVSybPpewa&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;javascript-scheme&quot;,
+        &quot;description&quot;: &quot;Non-HTTP scheme (script execution in the redirect target)&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;javascript:alert(document.domain)&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-Pd7teCHyLpGioAZK&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;data-scheme&quot;,
+        &quot;description&quot;: &quot;data: URI as redirect target&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-5jXVxFRi6BsuB-Rc&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;fragment-append&quot;,
+        &quot;description&quot;: &quot;Fragment appended to the registered URI&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback#attacker&quot;,
+        &quot;expected&quot;: &quot;accept&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-x73YUQ14xwnxtf4s&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;query-append&quot;,
+        &quot;description&quot;: &quot;Extra query parameter carrying an off-site URL&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback?next=https://evil-audit.invalid&quot;,
+        &quot;expected&quot;: &quot;accept&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-WXRej-QJjwAviVcB&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;scheme-upgrade&quot;,
+        &quot;description&quot;: &quot;HTTP upgraded to HTTPS (still a non-identical string)&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;https://localhost:9999/callback&quot;,
+        &quot;expected&quot;: &quot;reject&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-If3rV5aOCr73ZJK7&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      }
+    ]
+  },
+  {
+    &quot;accepted_equivalent&quot;: [
+      {
+        &quot;variant&quot;: &quot;control-exact&quot;,
+        &quot;description&quot;: &quot;Registered redirect_uri, unmodified (control case)&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback&quot;,
+        &quot;expected&quot;: &quot;accept&quot;,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;http_status&quot;: 302,
+        &quot;state&quot;: &quot;oa-p7NAKtULSbXwEvdN&quot;,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&amp;state=oa-p7NAKtULSbXwEvdN&quot;,
+        &quot;verdict&quot;: &quot;accepted (RFC 3986-equivalent to the registered URI)&quot;
+      }
+    ]
+  },
+  {
+    &quot;accepted_loosely&quot;: []
+  },
+  {
+    &quot;open_redirect_confirmed&quot;: []
+  },
+  {
+    &quot;indeterminate&quot;: []
+  },
+  {
+    &quot;over_strict_but_harmless&quot;: [
+      {
+        &quot;variant&quot;: &quot;case-change&quot;,
+        &quot;description&quot;: &quot;Scheme and host upper-cased&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;HTTP://LOCALHOST:9999/callback&quot;,
+        &quot;expected&quot;: &quot;accept&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-5KIm47odV7CnOqNy&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;fragment-append&quot;,
+        &quot;description&quot;: &quot;Fragment appended to the registered URI&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback#attacker&quot;,
+        &quot;expected&quot;: &quot;accept&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-x73YUQ14xwnxtf4s&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      },
+      {
+        &quot;variant&quot;: &quot;query-append&quot;,
+        &quot;description&quot;: &quot;Extra query parameter carrying an off-site URL&quot;,
+        &quot;redirect_uri_sent&quot;: &quot;http://localhost:9999/callback?next=https://evil-audit.invalid&quot;,
+        &quot;expected&quot;: &quot;accept&quot;,
+        &quot;outcome&quot;: &quot;http-error&quot;,
+        &quot;http_status&quot;: 400,
+        &quot;state&quot;: &quot;oa-WXRej-QJjwAviVcB&quot;,
+        &quot;error&quot;: &quot;invalid_request&quot;,
+        &quot;verdict&quot;: &quot;rejected with HTTP 400&quot;
+      }
+    ]
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">Refresh token rotation and reuse detection</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks refresh-reuse</code> &middot; <code>refresh-reuse</code></span>
+  </div>
+  <p class="summary">Refresh token was rotated on use and the replayed original token was rejected with error=invalid_grant - reuse detection is working.</p>
+  <div class="refs">References: RFC 9700 s2.2.2, RFC 6749 s6, RFC 6819 s5.2.2.3</div>
+  <details><summary>Evidence (5 blocks)</summary>
+  <pre>[
+  {
+    &quot;token_endpoint&quot;: &quot;https://localhost:54071/token&quot;,
+    &quot;refresh_token_supplied&quot;: &quot;&lt;redacted len=23 rt-l...&gt;&quot;,
+    &quot;client_type&quot;: &quot;public&quot;
+  },
+  {
+    &quot;step&quot;: &quot;1. legitimate refresh with the supplied token&quot;,
+    &quot;http_status&quot;: 200,
+    &quot;transport_error&quot;: null,
+    &quot;error&quot;: null,
+    &quot;error_description&quot;: null,
+    &quot;issued_access_token&quot;: true,
+    &quot;issued_refresh_token&quot;: true,
+    &quot;rotated&quot;: true,
+    &quot;fields_returned&quot;: [
+      &quot;access_token&quot;,
+      &quot;expires_in&quot;,
+      &quot;refresh_token&quot;,
+      &quot;token_type&quot;
+    ],
+    &quot;internal_detail&quot;: []
+  },
+  {
+    &quot;step&quot;: &quot;2. REPLAY of the same original refresh token&quot;,
+    &quot;http_status&quot;: 400,
+    &quot;transport_error&quot;: null,
+    &quot;error&quot;: &quot;invalid_grant&quot;,
+    &quot;error_description&quot;: &quot;refresh token reuse detected; token family revoked&quot;,
+    &quot;issued_access_token&quot;: false,
+    &quot;issued_refresh_token&quot;: false,
+    &quot;rotated&quot;: false,
+    &quot;fields_returned&quot;: [
+      &quot;error&quot;,
+      &quot;error_description&quot;
+    ],
+    &quot;internal_detail&quot;: []
+  },
+  {
+    &quot;reuse_detected&quot;: true,
+    &quot;error&quot;: &quot;invalid_grant&quot;
+  },
+  {
+    &quot;problems&quot;: []
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">Supported response types (implicit/hybrid flow exposure)</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks response-types</code> &middot; <code>response-type-enumeration</code></span>
+  </div>
+  <p class="summary">Only the authorization code flow is served; 7 other response type(s) were explicitly rejected.</p>
+  <div class="refs">References: RFC 9700 s2.1.1, RFC 6749 s3.1.1, OAuth 2.0 Security BCP</div>
+  <details><summary>Evidence (4 blocks)</summary>
+  <pre>[
+  {
+    &quot;declared_in_metadata&quot;: [
+      &quot;code&quot;
+    ]
+  },
+  {
+    &quot;probes&quot;: [
+      {
+        &quot;response_type&quot;: &quot;code&quot;,
+        &quot;description&quot;: &quot;Authorization Code flow (expected, correct)&quot;,
+        &quot;declared&quot;: true,
+        &quot;http_status&quot;: 302,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;state&quot;: &quot;oa-_bHORQduMd2kfgvQ&quot;,
+        &quot;state_echo&quot;: &quot;oa-_bHORQduMd2kfgvQ&quot;,
+        &quot;tokens_in_query&quot;: [
+          &quot;code&quot;
+        ],
+        &quot;tokens_in_fragment&quot;: [],
+        &quot;has_code&quot;: true,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&amp;state=oa-_bHORQduMd2kfgvQ&quot;,
+        &quot;verdict&quot;: &quot;served&quot;,
+        &quot;credentials_delivered&quot;: [
+          &quot;code&quot;
+        ]
+      },
+      {
+        &quot;response_type&quot;: &quot;token&quot;,
+        &quot;description&quot;: &quot;Implicit flow - access token in front channel&quot;,
+        &quot;declared&quot;: false,
+        &quot;http_status&quot;: 302,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;state&quot;: &quot;oa-Neuox8UGGRDuIohu&quot;,
+        &quot;state_echo&quot;: &quot;oa-Neuox8UGGRDuIohu&quot;,
+        &quot;tokens_in_query&quot;: [],
+        &quot;tokens_in_fragment&quot;: [],
+        &quot;has_code&quot;: false,
+        &quot;error&quot;: &quot;unsupported_response_type&quot;,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?error=unsupported_response_type&amp;error_description=only+%27code%27+is+supported&amp;state=oa-Neuox8UGGRDuIohu&quot;,
+        &quot;verdict&quot;: &quot;rejected&quot;
+      },
+      {
+        &quot;response_type&quot;: &quot;id_token&quot;,
+        &quot;description&quot;: &quot;Implicit flow - ID token only&quot;,
+        &quot;declared&quot;: false,
+        &quot;http_status&quot;: 302,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;state&quot;: &quot;oa-VIrjdqnX06lYZ_OR&quot;,
+        &quot;state_echo&quot;: &quot;oa-VIrjdqnX06lYZ_OR&quot;,
+        &quot;tokens_in_query&quot;: [],
+        &quot;tokens_in_fragment&quot;: [],
+        &quot;has_code&quot;: false,
+        &quot;error&quot;: &quot;unsupported_response_type&quot;,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?error=unsupported_response_type&amp;error_description=only+%27code%27+is+supported&amp;state=oa-VIrjdqnX06lYZ_OR&quot;,
+        &quot;verdict&quot;: &quot;rejected&quot;
+      },
+      {
+        &quot;response_type&quot;: &quot;id_token token&quot;,
+        &quot;description&quot;: &quot;Implicit flow - hybrid implicit&quot;,
+        &quot;declared&quot;: false,
+        &quot;http_status&quot;: 302,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;state&quot;: &quot;oa-ds0-X-TAxN1z1hsT&quot;,
+        &quot;state_echo&quot;: &quot;oa-ds0-X-TAxN1z1hsT&quot;,
+        &quot;tokens_in_query&quot;: [],
+        &quot;tokens_in_fragment&quot;: [],
+        &quot;has_code&quot;: false,
+        &quot;error&quot;: &quot;unsupported_response_type&quot;,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?error=unsupported_response_type&amp;error_description=only+%27code%27+is+supported&amp;state=oa-ds0-X-TAxN1z1hsT&quot;,
+        &quot;verdict&quot;: &quot;rejected&quot;
+      },
+      {
+        &quot;response_type&quot;: &quot;code id_token&quot;,
+        &quot;description&quot;: &quot;Hybrid flow&quot;,
+        &quot;declared&quot;: false,
+        &quot;http_status&quot;: 302,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;state&quot;: &quot;oa-0kfwUsyVsk23tRwQ&quot;,
+        &quot;state_echo&quot;: &quot;oa-0kfwUsyVsk23tRwQ&quot;,
+        &quot;tokens_in_query&quot;: [],
+        &quot;tokens_in_fragment&quot;: [],
+        &quot;has_code&quot;: false,
+        &quot;error&quot;: &quot;unsupported_response_type&quot;,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?error=unsupported_response_type&amp;error_description=only+%27code%27+is+supported&amp;state=oa-0kfwUsyVsk23tRwQ&quot;,
+        &quot;verdict&quot;: &quot;rejected&quot;
+      },
+      {
+        &quot;response_type&quot;: &quot;code token&quot;,
+        &quot;description&quot;: &quot;Hybrid flow - access token in front channel&quot;,
+        &quot;declared&quot;: false,
+        &quot;http_status&quot;: 302,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;state&quot;: &quot;oa-hpVcZXh2MDMtN9uG&quot;,
+        &quot;state_echo&quot;: &quot;oa-hpVcZXh2MDMtN9uG&quot;,
+        &quot;tokens_in_query&quot;: [],
+        &quot;tokens_in_fragment&quot;: [],
+        &quot;has_code&quot;: false,
+        &quot;error&quot;: &quot;unsupported_response_type&quot;,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?error=unsupported_response_type&amp;error_description=only+%27code%27+is+supported&amp;state=oa-hpVcZXh2MDMtN9uG&quot;,
+        &quot;verdict&quot;: &quot;rejected&quot;
+      },
+      {
+        &quot;response_type&quot;: &quot;code id_token token&quot;,
+        &quot;description&quot;: &quot;Hybrid flow - all tokens in front channel&quot;,
+        &quot;declared&quot;: false,
+        &quot;http_status&quot;: 302,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;state&quot;: &quot;oa-c87ePdLBNOS4Rs50&quot;,
+        &quot;state_echo&quot;: &quot;oa-c87ePdLBNOS4Rs50&quot;,
+        &quot;tokens_in_query&quot;: [],
+        &quot;tokens_in_fragment&quot;: [],
+        &quot;has_code&quot;: false,
+        &quot;error&quot;: &quot;unsupported_response_type&quot;,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?error=unsupported_response_type&amp;error_description=only+%27code%27+is+supported&amp;state=oa-c87ePdLBNOS4Rs50&quot;,
+        &quot;verdict&quot;: &quot;rejected&quot;
+      },
+      {
+        &quot;response_type&quot;: &quot;none&quot;,
+        &quot;description&quot;: &quot;RFC 8628 device flow marker / unusual&quot;,
+        &quot;declared&quot;: false,
+        &quot;http_status&quot;: 302,
+        &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+        &quot;state&quot;: &quot;oa-kWiSW2tzbvja4nZR&quot;,
+        &quot;state_echo&quot;: &quot;oa-kWiSW2tzbvja4nZR&quot;,
+        &quot;tokens_in_query&quot;: [],
+        &quot;tokens_in_fragment&quot;: [],
+        &quot;has_code&quot;: false,
+        &quot;error&quot;: &quot;unsupported_response_type&quot;,
+        &quot;location&quot;: &quot;http://localhost:9999/callback?error=unsupported_response_type&amp;error_description=only+%27code%27+is+supported&amp;state=oa-kWiSW2tzbvja4nZR&quot;,
+        &quot;verdict&quot;: &quot;rejected&quot;
+      }
+    ]
+  },
+  {
+    &quot;served_or_advertised&quot;: [
+      &quot;code&quot;
+    ],
+    &quot;explicitly_rejected&quot;: [
+      &quot;token&quot;,
+      &quot;id_token&quot;,
+      &quot;id_token token&quot;,
+      &quot;code id_token&quot;,
+      &quot;code token&quot;,
+      &quot;code id_token token&quot;,
+      &quot;none&quot;
+    ],
+    &quot;inconclusive&quot;: [],
+    &quot;implicit_or_hybrid_available&quot;: []
+  },
+  {
+    &quot;problems&quot;: []
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">State parameter handling (CSRF support)</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks state</code> &middot; <code>state-handling</code></span>
+  </div>
+  <p class="summary">&#x27;state&#x27; is returned unchanged when supplied. state was echoed back verbatim Server issued a credential to a request with no state. This is permitted - state is the client&#x27;s responsibility - but it means the client must not rely on the AS to enforce it. Both requests with the duplicated state were processed independently; the AS does not track state reuse (expected - replay protection is the client&#x27;s job via nonce/state).</p>
+  <div class="refs">References: RFC 6749 s4.1.2, s4.1.2.1, s10.12, RFC 9700 s2.1</div>
+  <details><summary>Evidence (4 blocks)</summary>
+  <pre>[
+  {
+    &quot;probe&quot;: &quot;state-echo&quot;,
+    &quot;state_sent&quot;: &quot;oa-state-ZozLZqDZDMTWhRaN9sOQwg&quot;,
+    &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;state=oa-state-ZozLZqDZDMTWhRaN9sOQwg&amp;code_challenge=DmqSYV0PZssSM80cZbyk4QXqlENfafpERHiKzLMadDk&amp;code_challenge_method=S256&quot;,
+    &quot;status&quot;: 302,
+    &quot;location&quot;: &quot;http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&amp;state=oa-state-ZozLZqDZDMTWhRaN9sOQwg&quot;,
+    &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+    &quot;to_client&quot;: true,
+    &quot;equivalent_to_registered&quot;: true,
+    &quot;query&quot;: {
+      &quot;code&quot;: &quot;&lt;redacted len=25 hard...&gt;&quot;,
+      &quot;state&quot;: &quot;oa-state-ZozLZqDZDMTWhRaN9sOQwg&quot;
+    },
+    &quot;fragment&quot;: {},
+    &quot;error&quot;: null,
+    &quot;has_code&quot;: true,
+    &quot;tokens_in_query&quot;: [
+      &quot;code&quot;
+    ],
+    &quot;tokens_in_fragment&quot;: [],
+    &quot;state_echo&quot;: &quot;oa-state-ZozLZqDZDMTWhRaN9sOQwg&quot;
+  },
+  {
+    &quot;probe&quot;: &quot;state-absent&quot;,
+    &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;code_challenge=uFfw0OlaEYGgZxISSYywyiyl8fvw1beTEr_-2venfjE&amp;code_challenge_method=S256&quot;,
+    &quot;status&quot;: 302,
+    &quot;state_sent&quot;: null,
+    &quot;location&quot;: &quot;http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&quot;,
+    &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+    &quot;to_client&quot;: true,
+    &quot;equivalent_to_registered&quot;: true,
+    &quot;query&quot;: {
+      &quot;code&quot;: &quot;&lt;redacted len=25 hard...&gt;&quot;
+    },
+    &quot;fragment&quot;: {},
+    &quot;error&quot;: null,
+    &quot;has_code&quot;: true,
+    &quot;tokens_in_query&quot;: [
+      &quot;code&quot;
+    ],
+    &quot;tokens_in_fragment&quot;: [],
+    &quot;state_echo&quot;: null
+  },
+  {
+    &quot;probe&quot;: &quot;the SAME state value sent twice&quot;,
+    &quot;state_sent&quot;: &quot;oa-dup-cEh9cYwPc4-gYCuW&quot;,
+    &quot;first&quot;: {
+      &quot;probe&quot;: &quot;state-reuse-first&quot;,
+      &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;state=oa-dup-cEh9cYwPc4-gYCuW&amp;code_challenge=bFxsImI--yIrQLYwBOuGrpWttC6MgQ58Rl5EFTj6tGE&amp;code_challenge_method=S256&quot;,
+      &quot;status&quot;: 302,
+      &quot;state_sent&quot;: &quot;oa-dup-cEh9cYwPc4-gYCuW&quot;,
+      &quot;location&quot;: &quot;http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&amp;state=oa-dup-cEh9cYwPc4-gYCuW&quot;,
+      &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+      &quot;to_client&quot;: true,
+      &quot;equivalent_to_registered&quot;: true,
+      &quot;query&quot;: {
+        &quot;code&quot;: &quot;&lt;redacted len=25 hard...&gt;&quot;,
+        &quot;state&quot;: &quot;oa-dup-cEh9cYwPc4-gYCuW&quot;
+      },
+      &quot;fragment&quot;: {},
+      &quot;error&quot;: null,
+      &quot;has_code&quot;: true,
+      &quot;tokens_in_query&quot;: [
+        &quot;code&quot;
+      ],
+      &quot;tokens_in_fragment&quot;: [],
+      &quot;state_echo&quot;: &quot;oa-dup-cEh9cYwPc4-gYCuW&quot;
+    },
+    &quot;second&quot;: {
+      &quot;probe&quot;: &quot;state-reuse-second&quot;,
+      &quot;request&quot;: &quot;https://localhost:54071/authorize?client_id=lab-client&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&amp;state=oa-dup-cEh9cYwPc4-gYCuW&amp;code_challenge=-STuEUkwI2Tb8z1awfCvCvNQ27Zs3epnp56Yu8uHsAY&amp;code_challenge_method=S256&quot;,
+      &quot;status&quot;: 302,
+      &quot;state_sent&quot;: &quot;oa-dup-cEh9cYwPc4-gYCuW&quot;,
+      &quot;location&quot;: &quot;http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&amp;state=oa-dup-cEh9cYwPc4-gYCuW&quot;,
+      &quot;outcome&quot;: &quot;redirect-to-client&quot;,
+      &quot;to_client&quot;: true,
+      &quot;equivalent_to_registered&quot;: true,
+      &quot;query&quot;: {
+        &quot;code&quot;: &quot;&lt;redacted len=25 hard...&gt;&quot;,
+        &quot;state&quot;: &quot;oa-dup-cEh9cYwPc4-gYCuW&quot;
+      },
+      &quot;fragment&quot;: {},
+      &quot;error&quot;: null,
+      &quot;has_code&quot;: true,
+      &quot;tokens_in_query&quot;: [
+        &quot;code&quot;
+      ],
+      &quot;tokens_in_fragment&quot;: [],
+      &quot;state_echo&quot;: &quot;oa-dup-cEh9cYwPc4-gYCuW&quot;
+    }
+  },
+  {
+    &quot;problems&quot;: [],
+    &quot;observations&quot;: [
+      &quot;state was echoed back verbatim&quot;,
+      &quot;Server issued a credential to a request with no state. This is permitted - state is the client&#x27;s responsibility - but it means the client must not rely on the AS to enforce it.&quot;,
+      &quot;Both requests with the duplicated state were processed independently; the AS does not track state reuse (expected - replay protection is the client&#x27;s job via nonce/state).&quot;
+    ],
+    &quot;definitive_responses&quot;: 3,
+    &quot;inconclusive_probes&quot;: 0
+  }
+]</pre></details>
+</div>
+<div class="card PASS">
+  <div class="ct">
+    <span class="badge PASS">pass</span>
+    <span class="title">Credentials exposed in redirect URLs</span>
+    <span class="sev">INFO</span>
+    <span class="cid"><code>--checks token-leakage</code> &middot; <code>token-leakage-in-redirect</code></span>
+  </div>
+  <p class="summary">Inspected 17 client-bound redirect URL(s); no credential appeared where it should not, and state was echoed correctly.</p>
+  <div class="refs">References: RFC 9700 s2.1.1, s2.1.4, RFC 6749 s4.2.2, s10.3, RFC 6819 s5.2.3.4</div>
+  <details><summary>Evidence (4 blocks)</summary>
+  <pre>[
+  {
+    &quot;client_bound_redirects_inspected&quot;: 17
+  },
+  {
+    &quot;credentials_in_query_component&quot;: []
+  },
+  {
+    &quot;credentials_in_fragment_component&quot;: []
+  },
+  {
+    &quot;state_handling_issues&quot;: []
+  }
+]</pre></details>
+</div>
+<h2>Run details</h2>
+<div class="banner"><table>
+<tr><th>Checks enabled</th><td><code>discovery, redirect, pkce, response-types, token-auth, state, refresh-reuse, introspection, jwks, error-hygiene, token-leakage</code></td></tr>
+<tr><th>Duration</th><td>7.1s</td></tr>
+<tr><th>HTTP requests sent</th><td>46</td></tr>
+<tr><th>Authenticated session used</th><td>no</td></tr>
+<tr><th>Connect via</th><td><code>127.0.0.1</code></td></tr>
+<tr><th>TLS trust</th><td>lab CA bundle</td></tr>
+<tr><th>Credentials supplied</th><td>auth-code, refresh-token, access-token</td></tr>
+<tr><th>Run on</th><td>Linux-6.1.189+-x86_64-with-glibc2.41 &middot; Python 3.13.18</td></tr>
+</table></div>
+
+<div class="note">
+NullGrant sends only the requests an OAuth client would legitimately send, using the single
+registered test client named on the command line. It does not brute force, does not enumerate
+other clients or user accounts, and does not attempt to exploit any condition it reports.
+Credential-like values in this report are truncated. Every finding is a configuration
+observation for you to verify and remediate on systems you own or are authorised to test.
+</div>
+</div></body></html>

@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Audit output - reports may contain details about your infrastructure.
+# Never commit these.
+report*/
+nullgrant-report/
+*.report.json
+*.report.html
+!docs/sample-*/
+
+# Lab material - certificates, tokens, session cookies
+*.pem
+*.crt
+*.key
+.env
+secrets.*

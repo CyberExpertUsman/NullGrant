@@ -1,0 +1,1164 @@
+{
+  "tool": "NullGrant",
+  "version": "1.0.0",
+  "generated_at": "2026-11-22T17:51:11.759827+00:00",
+  "target": {
+    "issuer": "https://localhost:54071",
+    "client_id": "lab-client",
+    "client_type": "public",
+    "redirect_uri": "http://localhost:9999/callback",
+    "authorization_endpoint": "https://localhost:54071/authorize",
+    "token_endpoint": "https://localhost:54071/token",
+    "jwks_uri": "https://localhost:54071/jwks.json",
+    "metadata_source": "https://localhost:54071/.well-known/openid-configuration",
+    "metadata_error": null,
+    "metadata": {
+      "issuer": "https://localhost:54071",
+      "authorization_endpoint": "https://localhost:54071/authorize",
+      "token_endpoint": "https://localhost:54071/token",
+      "jwks_uri": "https://localhost:54071/jwks.json",
+      "introspection_endpoint": "https://localhost:54071/introspect",
+      "response_types_supported": [
+        "code"
+      ],
+      "grant_types_supported": [
+        "authorization_code",
+        "refresh_token"
+      ],
+      "code_challenge_methods_supported": [
+        "S256"
+      ],
+      "token_endpoint_auth_methods_supported": [
+        "client_secret_basic",
+        "none"
+      ],
+      "scopes_supported": [
+        "openid",
+        "profile"
+      ],
+      "subject_types_supported": [
+        "public"
+      ],
+      "id_token_signing_alg_values_supported": [
+        "RS256"
+      ]
+    }
+  },
+  "run": {
+    "http_requests": 46,
+    "duration_seconds": 7.07,
+    "checks_enabled": [
+      "discovery",
+      "redirect",
+      "pkce",
+      "response-types",
+      "token-auth",
+      "state",
+      "refresh-reuse",
+      "introspection",
+      "jwks",
+      "error-hygiene",
+      "token-leakage"
+    ],
+    "dry_run": false,
+    "platform": "Linux-6.1.189+-x86_64-with-glibc2.41",
+    "system": "Linux",
+    "python_version": "3.13.18",
+    "tool_version": "1.0.0",
+    "connection": {
+      "target_ip": "127.0.0.1",
+      "ca_bundle": true,
+      "insecure_tls": false,
+      "authenticated_session": false,
+      "auth_code_supplied": true,
+      "refresh_token_supplied": true,
+      "access_token_supplied": true
+    }
+  },
+  "summary": {
+    "PASS": 10,
+    "FAIL": 0,
+    "WARN": 1,
+    "INDETERMINATE": 0,
+    "INFO": 0
+  },
+  "findings": [
+    {
+      "check_id": "discovery-transport",
+      "title": "TLS, discovery document and advertised capabilities",
+      "status": "PASS",
+      "check": "discovery",
+      "severity": "INFO",
+      "summary": "Endpoints are HTTPS and the discovery document is internally consistent.",
+      "evidence": [
+        {
+          "issuer": "https://localhost:54071",
+          "metadata_source": "https://localhost:54071/.well-known/openid-configuration",
+          "metadata_error": null,
+          "authorization_endpoint": "https://localhost:54071/authorize",
+          "token_endpoint": "https://localhost:54071/token",
+          "jwks_uri": "https://localhost:54071/jwks.json",
+          "client_type": "public"
+        },
+        {
+          "response_types_supported": [
+            "code"
+          ]
+        },
+        {
+          "code_challenge_methods_supported": [
+            "S256"
+          ]
+        },
+        {
+          "grant_types_supported": [
+            "authorization_code",
+            "refresh_token"
+          ]
+        },
+        {
+          "token_endpoint_auth_methods_supported": [
+            "client_secret_basic",
+            "none"
+          ]
+        },
+        {
+          "tls_client_certificate_bound_access_tokens": null,
+          "mtls_endpoint_aliases": null,
+          "authorization_signing_alg_values_supported": null
+        },
+        {
+          "problems": []
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 8414",
+        "RFC 9700 s2.1",
+        "OpenID Connect Discovery 1.0"
+      ]
+    },
+    {
+      "check_id": "redirect-uri-strictness",
+      "title": "Strict redirect_uri validation (open redirection)",
+      "status": "PASS",
+      "check": "redirect",
+      "severity": "INFO",
+      "summary": "16 of 17 redirect_uri variant(s) were rejected and 1 resolved to the exact registered URI. No non-identical URI was accepted. Note: 3 benign-equivalent variant(s) (case-change, fragment-append, query-append) were also refused; that is stricter than required but not a weakness.",
+      "evidence": [
+        {
+          "registered_redirect_uri": "http://localhost:9999/callback",
+          "registered_host": "localhost",
+          "authorization_endpoint": "https://localhost:54071/authorize",
+          "variants_tested": 17
+        },
+        {
+          "rejected": [
+            {
+              "variant": "trailing-slash",
+              "description": "Trailing slash appended",
+              "redirect_uri_sent": "http://localhost:9999/callback/",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-zDGXmPvRcsbMRhbG",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "path-suffix",
+              "description": "Extra path segment appended (prefix matching flaw)",
+              "redirect_uri_sent": "http://localhost:9999/callback/attacker",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-Q_aeYKiL5eNxUzId",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "dot-segment-escape",
+              "description": "Dot-segment path traversal past the registered path",
+              "redirect_uri_sent": "http://localhost:9999/callback/../attacker",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-G7ji8Ayln0LJQqJw",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "encoded-traversal",
+              "description": "Percent-encoded traversal (parser-differential flaw)",
+              "redirect_uri_sent": "http://localhost:9999/callback%2f..%2f..%2fattacker",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-1yQs1l-lvQuu41BY",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "subdomain-confusion",
+              "description": "Registered host used as a label of an attacker domain",
+              "redirect_uri_sent": "http://localhost.evil-audit.invalid:9999/callback",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-z0sBoRj1erxp0IJb",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "host-swap",
+              "description": "Completely different host",
+              "redirect_uri_sent": "http://evil-audit.invalid:9999/callback",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-iI_08b8y67fGj4dy",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "userinfo-override",
+              "description": "Userinfo component to confuse host parsing",
+              "redirect_uri_sent": "http://localhost@evil-audit.invalid:9999/callback",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-C6JELF1uE8_VA-Dk",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "backslash-override",
+              "description": "Backslash separator (browser/URllib parsing differential)",
+              "redirect_uri_sent": "http://localhost\\@evil-audit.invalid:9999/callback",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-bMpY9Yuw31da4S9e",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "port-change",
+              "description": "Different port on the same host",
+              "redirect_uri_sent": "http://localhost:8443/callback",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-pSxReY2gOFCONg5U",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "case-change",
+              "description": "Scheme and host upper-cased",
+              "redirect_uri_sent": "HTTP://LOCALHOST:9999/callback",
+              "expected": "accept",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-5KIm47odV7CnOqNy",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "protocol-relative",
+              "description": "Protocol-relative URL",
+              "redirect_uri_sent": "//evil-audit.invalid/callback",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-qSiQ5xBVSybPpewa",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "javascript-scheme",
+              "description": "Non-HTTP scheme (script execution in the redirect target)",
+              "redirect_uri_sent": "javascript:alert(document.domain)",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-Pd7teCHyLpGioAZK",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "data-scheme",
+              "description": "data: URI as redirect target",
+              "redirect_uri_sent": "data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-5jXVxFRi6BsuB-Rc",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "fragment-append",
+              "description": "Fragment appended to the registered URI",
+              "redirect_uri_sent": "http://localhost:9999/callback#attacker",
+              "expected": "accept",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-x73YUQ14xwnxtf4s",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "query-append",
+              "description": "Extra query parameter carrying an off-site URL",
+              "redirect_uri_sent": "http://localhost:9999/callback?next=https://evil-audit.invalid",
+              "expected": "accept",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-WXRej-QJjwAviVcB",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "scheme-upgrade",
+              "description": "HTTP upgraded to HTTPS (still a non-identical string)",
+              "redirect_uri_sent": "https://localhost:9999/callback",
+              "expected": "reject",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-If3rV5aOCr73ZJK7",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            }
+          ]
+        },
+        {
+          "accepted_equivalent": [
+            {
+              "variant": "control-exact",
+              "description": "Registered redirect_uri, unmodified (control case)",
+              "redirect_uri_sent": "http://localhost:9999/callback",
+              "expected": "accept",
+              "outcome": "redirect-to-client",
+              "http_status": 302,
+              "state": "oa-p7NAKtULSbXwEvdN",
+              "location": "http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&state=oa-p7NAKtULSbXwEvdN",
+              "verdict": "accepted (RFC 3986-equivalent to the registered URI)"
+            }
+          ]
+        },
+        {
+          "accepted_loosely": []
+        },
+        {
+          "open_redirect_confirmed": []
+        },
+        {
+          "indeterminate": []
+        },
+        {
+          "over_strict_but_harmless": [
+            {
+              "variant": "case-change",
+              "description": "Scheme and host upper-cased",
+              "redirect_uri_sent": "HTTP://LOCALHOST:9999/callback",
+              "expected": "accept",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-5KIm47odV7CnOqNy",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "fragment-append",
+              "description": "Fragment appended to the registered URI",
+              "redirect_uri_sent": "http://localhost:9999/callback#attacker",
+              "expected": "accept",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-x73YUQ14xwnxtf4s",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            },
+            {
+              "variant": "query-append",
+              "description": "Extra query parameter carrying an off-site URL",
+              "redirect_uri_sent": "http://localhost:9999/callback?next=https://evil-audit.invalid",
+              "expected": "accept",
+              "outcome": "http-error",
+              "http_status": 400,
+              "state": "oa-WXRej-QJjwAviVcB",
+              "error": "invalid_request",
+              "verdict": "rejected with HTTP 400"
+            }
+          ]
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 6749 s3.1.2.3, s4.1.3",
+        "RFC 9700 s2.1.3",
+        "RFC 8252 s7.3"
+      ]
+    },
+    {
+      "check_id": "pkce-enforcement",
+      "title": "Proof Key for Code Exchange (PKCE) enforcement",
+      "status": "PASS",
+      "check": "pkce",
+      "severity": "INFO",
+      "summary": "PKCE is enforced: a request with no code_challenge was rejected, and 'plain', undersized, non-base64url and unknown-method challenges were all refused.",
+      "evidence": [
+        {
+          "client_type": "public",
+          "authorization_endpoint": "https://localhost:54071/authorize"
+        },
+        {
+          "code_challenge_methods_supported": [
+            "S256"
+          ]
+        },
+        {
+          "probe": "pkce-absent",
+          "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&state=oa-aMP7Q0UN2cOv_KMe",
+          "status": 302,
+          "state_sent": "oa-aMP7Q0UN2cOv_KMe",
+          "location": "http://localhost:9999/callback?error=invalid_request&error_description=code_challenge+is+required&state=oa-aMP7Q0UN2cOv_KMe",
+          "outcome": "redirect-to-client",
+          "to_client": true,
+          "equivalent_to_registered": true,
+          "query": {
+            "error": "invalid_request",
+            "error_description": "code_challenge is required",
+            "state": "oa-aMP7Q0UN2cOv_KMe"
+          },
+          "fragment": {},
+          "error": "invalid_request",
+          "has_code": false,
+          "tokens_in_query": [],
+          "tokens_in_fragment": [],
+          "state_echo": "oa-aMP7Q0UN2cOv_KMe"
+        },
+        {
+          "probe": "pkce-plain",
+          "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&state=oa-XlZIU9m8L_28Gc1h&code_challenge=rW_Au3xREieUwwZsG4-pmLA4dA_bnNhc4Te40HN01GMfw1phQyBvmg_MFTzY6hbA&code_challenge_method=plain",
+          "status": 302,
+          "state_sent": "oa-XlZIU9m8L_28Gc1h",
+          "location": "http://localhost:9999/callback?error=invalid_request&error_description=only+S256+is+supported&state=oa-XlZIU9m8L_28Gc1h",
+          "outcome": "redirect-to-client",
+          "to_client": true,
+          "equivalent_to_registered": true,
+          "query": {
+            "error": "invalid_request",
+            "error_description": "only S256 is supported",
+            "state": "oa-XlZIU9m8L_28Gc1h"
+          },
+          "fragment": {},
+          "error": "invalid_request",
+          "has_code": false,
+          "tokens_in_query": [],
+          "tokens_in_fragment": [],
+          "state_echo": "oa-XlZIU9m8L_28Gc1h"
+        },
+        {
+          "probe": "pkce-short-challenge",
+          "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&state=oa-kqjlIx3l7AkA24Tk&code_challenge=short&code_challenge_method=S256",
+          "status": 302,
+          "state_sent": "oa-kqjlIx3l7AkA24Tk",
+          "location": "http://localhost:9999/callback?error=invalid_request&error_description=code_challenge+must+be+43-128+characters&state=oa-kqjlIx3l7AkA24Tk",
+          "outcome": "redirect-to-client",
+          "to_client": true,
+          "equivalent_to_registered": true,
+          "query": {
+            "error": "invalid_request",
+            "error_description": "code_challenge must be 43-128 characters",
+            "state": "oa-kqjlIx3l7AkA24Tk"
+          },
+          "fragment": {},
+          "error": "invalid_request",
+          "has_code": false,
+          "tokens_in_query": [],
+          "tokens_in_fragment": [],
+          "state_echo": "oa-kqjlIx3l7AkA24Tk"
+        },
+        {
+          "probe": "pkce-invalid-encoding",
+          "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&state=oa-X0dNM_HcCxogd2vA&code_challenge=%21%21%21not-base64url%21%21%21&code_challenge_method=S256",
+          "status": 302,
+          "state_sent": "oa-X0dNM_HcCxogd2vA",
+          "location": "http://localhost:9999/callback?error=invalid_request&error_description=code_challenge+must+be+43-128+characters&state=oa-X0dNM_HcCxogd2vA",
+          "outcome": "redirect-to-client",
+          "to_client": true,
+          "equivalent_to_registered": true,
+          "query": {
+            "error": "invalid_request",
+            "error_description": "code_challenge must be 43-128 characters",
+            "state": "oa-X0dNM_HcCxogd2vA"
+          },
+          "fragment": {},
+          "error": "invalid_request",
+          "has_code": false,
+          "tokens_in_query": [],
+          "tokens_in_fragment": [],
+          "state_echo": "oa-X0dNM_HcCxogd2vA"
+        },
+        {
+          "probe": "pkce-bogus-method",
+          "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&state=oa-lLhsLVSnv5y-JfEY&code_challenge=bogus-method&code_challenge_method=bogus-method",
+          "status": 302,
+          "state_sent": "oa-lLhsLVSnv5y-JfEY",
+          "location": "http://localhost:9999/callback?error=invalid_request&error_description=only+S256+is+supported&state=oa-lLhsLVSnv5y-JfEY",
+          "outcome": "redirect-to-client",
+          "to_client": true,
+          "equivalent_to_registered": true,
+          "query": {
+            "error": "invalid_request",
+            "error_description": "only S256 is supported",
+            "state": "oa-lLhsLVSnv5y-JfEY"
+          },
+          "fragment": {},
+          "error": "invalid_request",
+          "has_code": false,
+          "tokens_in_query": [],
+          "tokens_in_fragment": [],
+          "state_echo": "oa-lLhsLVSnv5y-JfEY"
+        },
+        {
+          "probe": "token exchange of a real code with NO code_verifier",
+          "status": 400,
+          "error": "invalid_request",
+          "issued_token": false
+        },
+        {
+          "problems": [],
+          "notes": [
+            "Server rejected the PKCE-less request with error=invalid_request",
+            "Server rejected 'plain' with error=invalid_request",
+            "Server rejected the undersized code_challenge",
+            "Server rejected a malformed code_challenge",
+            "Server rejected an unknown code_challenge_method"
+          ],
+          "live_probe_results": {
+            "pkce_absent": "rejected",
+            "plain_method": "rejected",
+            "short_challenge": "rejected",
+            "non_base64url_challenge": "rejected",
+            "unknown_method": "rejected"
+          },
+          "token_endpoint_probe": {
+            "probe": "token exchange of a real code with NO code_verifier",
+            "status": 400,
+            "error": "invalid_request",
+            "issued_token": false
+          }
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 7636",
+        "RFC 9700 s2.1.2",
+        "RFC 8252 s8.3"
+      ]
+    },
+    {
+      "check_id": "response-type-enumeration",
+      "title": "Supported response types (implicit/hybrid flow exposure)",
+      "status": "PASS",
+      "check": "response-types",
+      "severity": "INFO",
+      "summary": "Only the authorization code flow is served; 7 other response type(s) were explicitly rejected.",
+      "evidence": [
+        {
+          "declared_in_metadata": [
+            "code"
+          ]
+        },
+        {
+          "probes": [
+            {
+              "response_type": "code",
+              "description": "Authorization Code flow (expected, correct)",
+              "declared": true,
+              "http_status": 302,
+              "outcome": "redirect-to-client",
+              "state": "oa-_bHORQduMd2kfgvQ",
+              "state_echo": "oa-_bHORQduMd2kfgvQ",
+              "tokens_in_query": [
+                "code"
+              ],
+              "tokens_in_fragment": [],
+              "has_code": true,
+              "location": "http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&state=oa-_bHORQduMd2kfgvQ",
+              "verdict": "served",
+              "credentials_delivered": [
+                "code"
+              ]
+            },
+            {
+              "response_type": "token",
+              "description": "Implicit flow - access token in front channel",
+              "declared": false,
+              "http_status": 302,
+              "outcome": "redirect-to-client",
+              "state": "oa-Neuox8UGGRDuIohu",
+              "state_echo": "oa-Neuox8UGGRDuIohu",
+              "tokens_in_query": [],
+              "tokens_in_fragment": [],
+              "has_code": false,
+              "error": "unsupported_response_type",
+              "location": "http://localhost:9999/callback?error=unsupported_response_type&error_description=only+%27code%27+is+supported&state=oa-Neuox8UGGRDuIohu",
+              "verdict": "rejected"
+            },
+            {
+              "response_type": "id_token",
+              "description": "Implicit flow - ID token only",
+              "declared": false,
+              "http_status": 302,
+              "outcome": "redirect-to-client",
+              "state": "oa-VIrjdqnX06lYZ_OR",
+              "state_echo": "oa-VIrjdqnX06lYZ_OR",
+              "tokens_in_query": [],
+              "tokens_in_fragment": [],
+              "has_code": false,
+              "error": "unsupported_response_type",
+              "location": "http://localhost:9999/callback?error=unsupported_response_type&error_description=only+%27code%27+is+supported&state=oa-VIrjdqnX06lYZ_OR",
+              "verdict": "rejected"
+            },
+            {
+              "response_type": "id_token token",
+              "description": "Implicit flow - hybrid implicit",
+              "declared": false,
+              "http_status": 302,
+              "outcome": "redirect-to-client",
+              "state": "oa-ds0-X-TAxN1z1hsT",
+              "state_echo": "oa-ds0-X-TAxN1z1hsT",
+              "tokens_in_query": [],
+              "tokens_in_fragment": [],
+              "has_code": false,
+              "error": "unsupported_response_type",
+              "location": "http://localhost:9999/callback?error=unsupported_response_type&error_description=only+%27code%27+is+supported&state=oa-ds0-X-TAxN1z1hsT",
+              "verdict": "rejected"
+            },
+            {
+              "response_type": "code id_token",
+              "description": "Hybrid flow",
+              "declared": false,
+              "http_status": 302,
+              "outcome": "redirect-to-client",
+              "state": "oa-0kfwUsyVsk23tRwQ",
+              "state_echo": "oa-0kfwUsyVsk23tRwQ",
+              "tokens_in_query": [],
+              "tokens_in_fragment": [],
+              "has_code": false,
+              "error": "unsupported_response_type",
+              "location": "http://localhost:9999/callback?error=unsupported_response_type&error_description=only+%27code%27+is+supported&state=oa-0kfwUsyVsk23tRwQ",
+              "verdict": "rejected"
+            },
+            {
+              "response_type": "code token",
+              "description": "Hybrid flow - access token in front channel",
+              "declared": false,
+              "http_status": 302,
+              "outcome": "redirect-to-client",
+              "state": "oa-hpVcZXh2MDMtN9uG",
+              "state_echo": "oa-hpVcZXh2MDMtN9uG",
+              "tokens_in_query": [],
+              "tokens_in_fragment": [],
+              "has_code": false,
+              "error": "unsupported_response_type",
+              "location": "http://localhost:9999/callback?error=unsupported_response_type&error_description=only+%27code%27+is+supported&state=oa-hpVcZXh2MDMtN9uG",
+              "verdict": "rejected"
+            },
+            {
+              "response_type": "code id_token token",
+              "description": "Hybrid flow - all tokens in front channel",
+              "declared": false,
+              "http_status": 302,
+              "outcome": "redirect-to-client",
+              "state": "oa-c87ePdLBNOS4Rs50",
+              "state_echo": "oa-c87ePdLBNOS4Rs50",
+              "tokens_in_query": [],
+              "tokens_in_fragment": [],
+              "has_code": false,
+              "error": "unsupported_response_type",
+              "location": "http://localhost:9999/callback?error=unsupported_response_type&error_description=only+%27code%27+is+supported&state=oa-c87ePdLBNOS4Rs50",
+              "verdict": "rejected"
+            },
+            {
+              "response_type": "none",
+              "description": "RFC 8628 device flow marker / unusual",
+              "declared": false,
+              "http_status": 302,
+              "outcome": "redirect-to-client",
+              "state": "oa-kWiSW2tzbvja4nZR",
+              "state_echo": "oa-kWiSW2tzbvja4nZR",
+              "tokens_in_query": [],
+              "tokens_in_fragment": [],
+              "has_code": false,
+              "error": "unsupported_response_type",
+              "location": "http://localhost:9999/callback?error=unsupported_response_type&error_description=only+%27code%27+is+supported&state=oa-kWiSW2tzbvja4nZR",
+              "verdict": "rejected"
+            }
+          ]
+        },
+        {
+          "served_or_advertised": [
+            "code"
+          ],
+          "explicitly_rejected": [
+            "token",
+            "id_token",
+            "id_token token",
+            "code id_token",
+            "code token",
+            "code id_token token",
+            "none"
+          ],
+          "inconclusive": [],
+          "implicit_or_hybrid_available": []
+        },
+        {
+          "problems": []
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 9700 s2.1.1",
+        "RFC 6749 s3.1.1",
+        "OAuth 2.0 Security BCP"
+      ]
+    },
+    {
+      "check_id": "token-endpoint-auth",
+      "title": "Token endpoint client authentication and error hygiene",
+      "status": "WARN",
+      "check": "token-auth",
+      "severity": "MEDIUM",
+      "summary": "To verify (not observable externally): The refresh_token grant is advertised and this is a public client. Verify that refresh tokens are sender-constrained, or rotated on every use with reuse detection (RFC 9700 s2.2.2). This cannot be confirmed by external probing.",
+      "evidence": [
+        {
+          "token_endpoint": "https://localhost:54071/token",
+          "client_type": "public"
+        },
+        {
+          "probe": "POST token endpoint, no client authentication, deliberately invalid code",
+          "http_status": 400,
+          "error": "invalid_request",
+          "error_description": "code_verifier required",
+          "issued_access_token": false,
+          "internal_detail": []
+        },
+        {
+          "grant_types_supported": [
+            "authorization_code",
+            "refresh_token"
+          ]
+        },
+        {
+          "problems": [],
+          "advisories": [
+            "The refresh_token grant is advertised and this is a public client. Verify that refresh tokens are sender-constrained, or rotated on every use with reuse detection (RFC 9700 s2.2.2). This cannot be confirmed by external probing."
+          ]
+        }
+      ],
+      "recommendation": "Authenticate every client at the token endpoint, return error=invalid_client for failed authentication, and keep error responses free of stack traces. For public clients, use rotating sender-constrained refresh tokens.",
+      "references": [
+        "RFC 9700 s2.1.1, s2.2.2",
+        "RFC 6749 s2.3",
+        "RFC 6819 s5.1.4"
+      ]
+    },
+    {
+      "check_id": "state-handling",
+      "title": "State parameter handling (CSRF support)",
+      "status": "PASS",
+      "check": "state",
+      "severity": "INFO",
+      "summary": "'state' is returned unchanged when supplied. state was echoed back verbatim Server issued a credential to a request with no state. This is permitted - state is the client's responsibility - but it means the client must not rely on the AS to enforce it. Both requests with the duplicated state were processed independently; the AS does not track state reuse (expected - replay protection is the client's job via nonce/state).",
+      "evidence": [
+        {
+          "probe": "state-echo",
+          "state_sent": "oa-state-ZozLZqDZDMTWhRaN9sOQwg",
+          "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&state=oa-state-ZozLZqDZDMTWhRaN9sOQwg&code_challenge=DmqSYV0PZssSM80cZbyk4QXqlENfafpERHiKzLMadDk&code_challenge_method=S256",
+          "status": 302,
+          "location": "http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&state=oa-state-ZozLZqDZDMTWhRaN9sOQwg",
+          "outcome": "redirect-to-client",
+          "to_client": true,
+          "equivalent_to_registered": true,
+          "query": {
+            "code": "<redacted len=25 hard...>",
+            "state": "oa-state-ZozLZqDZDMTWhRaN9sOQwg"
+          },
+          "fragment": {},
+          "error": null,
+          "has_code": true,
+          "tokens_in_query": [
+            "code"
+          ],
+          "tokens_in_fragment": [],
+          "state_echo": "oa-state-ZozLZqDZDMTWhRaN9sOQwg"
+        },
+        {
+          "probe": "state-absent",
+          "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&code_challenge=uFfw0OlaEYGgZxISSYywyiyl8fvw1beTEr_-2venfjE&code_challenge_method=S256",
+          "status": 302,
+          "state_sent": null,
+          "location": "http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E",
+          "outcome": "redirect-to-client",
+          "to_client": true,
+          "equivalent_to_registered": true,
+          "query": {
+            "code": "<redacted len=25 hard...>"
+          },
+          "fragment": {},
+          "error": null,
+          "has_code": true,
+          "tokens_in_query": [
+            "code"
+          ],
+          "tokens_in_fragment": [],
+          "state_echo": null
+        },
+        {
+          "probe": "the SAME state value sent twice",
+          "state_sent": "oa-dup-cEh9cYwPc4-gYCuW",
+          "first": {
+            "probe": "state-reuse-first",
+            "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&state=oa-dup-cEh9cYwPc4-gYCuW&code_challenge=bFxsImI--yIrQLYwBOuGrpWttC6MgQ58Rl5EFTj6tGE&code_challenge_method=S256",
+            "status": 302,
+            "state_sent": "oa-dup-cEh9cYwPc4-gYCuW",
+            "location": "http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&state=oa-dup-cEh9cYwPc4-gYCuW",
+            "outcome": "redirect-to-client",
+            "to_client": true,
+            "equivalent_to_registered": true,
+            "query": {
+              "code": "<redacted len=25 hard...>",
+              "state": "oa-dup-cEh9cYwPc4-gYCuW"
+            },
+            "fragment": {},
+            "error": null,
+            "has_code": true,
+            "tokens_in_query": [
+              "code"
+            ],
+            "tokens_in_fragment": [],
+            "state_echo": "oa-dup-cEh9cYwPc4-gYCuW"
+          },
+          "second": {
+            "probe": "state-reuse-second",
+            "request": "https://localhost:54071/authorize?client_id=lab-client&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback&state=oa-dup-cEh9cYwPc4-gYCuW&code_challenge=-STuEUkwI2Tb8z1awfCvCvNQ27Zs3epnp56Yu8uHsAY&code_challenge_method=S256",
+            "status": 302,
+            "state_sent": "oa-dup-cEh9cYwPc4-gYCuW",
+            "location": "http://localhost:9999/callback?code=%3Credacted+len%3D25+hard...%3E&state=oa-dup-cEh9cYwPc4-gYCuW",
+            "outcome": "redirect-to-client",
+            "to_client": true,
+            "equivalent_to_registered": true,
+            "query": {
+              "code": "<redacted len=25 hard...>",
+              "state": "oa-dup-cEh9cYwPc4-gYCuW"
+            },
+            "fragment": {},
+            "error": null,
+            "has_code": true,
+            "tokens_in_query": [
+              "code"
+            ],
+            "tokens_in_fragment": [],
+            "state_echo": "oa-dup-cEh9cYwPc4-gYCuW"
+          }
+        },
+        {
+          "problems": [],
+          "observations": [
+            "state was echoed back verbatim",
+            "Server issued a credential to a request with no state. This is permitted - state is the client's responsibility - but it means the client must not rely on the AS to enforce it.",
+            "Both requests with the duplicated state were processed independently; the AS does not track state reuse (expected - replay protection is the client's job via nonce/state)."
+          ],
+          "definitive_responses": 3,
+          "inconclusive_probes": 0
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 6749 s4.1.2, s4.1.2.1, s10.12",
+        "RFC 9700 s2.1"
+      ]
+    },
+    {
+      "check_id": "refresh-reuse",
+      "title": "Refresh token rotation and reuse detection",
+      "status": "PASS",
+      "check": "refresh-reuse",
+      "severity": "INFO",
+      "summary": "Refresh token was rotated on use and the replayed original token was rejected with error=invalid_grant - reuse detection is working.",
+      "evidence": [
+        {
+          "token_endpoint": "https://localhost:54071/token",
+          "refresh_token_supplied": "<redacted len=23 rt-l...>",
+          "client_type": "public"
+        },
+        {
+          "step": "1. legitimate refresh with the supplied token",
+          "http_status": 200,
+          "transport_error": null,
+          "error": null,
+          "error_description": null,
+          "issued_access_token": true,
+          "issued_refresh_token": true,
+          "rotated": true,
+          "fields_returned": [
+            "access_token",
+            "expires_in",
+            "refresh_token",
+            "token_type"
+          ],
+          "internal_detail": []
+        },
+        {
+          "step": "2. REPLAY of the same original refresh token",
+          "http_status": 400,
+          "transport_error": null,
+          "error": "invalid_grant",
+          "error_description": "refresh token reuse detected; token family revoked",
+          "issued_access_token": false,
+          "issued_refresh_token": false,
+          "rotated": false,
+          "fields_returned": [
+            "error",
+            "error_description"
+          ],
+          "internal_detail": []
+        },
+        {
+          "reuse_detected": true,
+          "error": "invalid_grant"
+        },
+        {
+          "problems": []
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 9700 s2.2.2",
+        "RFC 6749 s6",
+        "RFC 6819 s5.2.2.3"
+      ]
+    },
+    {
+      "check_id": "introspection",
+      "title": "Token introspection endpoint behaviour",
+      "status": "PASS",
+      "check": "introspection",
+      "severity": "INFO",
+      "summary": "Introspection requires client authentication and disclosed only standard fields: active, client_id, exp, iat, scope, sub, token_type.",
+      "evidence": [
+        {
+          "introspection_endpoint": "https://localhost:54071/introspect",
+          "token_supplied": "<redacted len=23 at-l...>",
+          "client_type": "public"
+        },
+        {
+          "step": "A. POST with token and NO client authentication",
+          "http_status": 401,
+          "transport_error": null,
+          "authenticated": false,
+          "error": "invalid_client",
+          "active": null,
+          "fields_returned": [
+            "error"
+          ],
+          "body": {
+            "error": "invalid_client"
+          },
+          "internal_detail": []
+        },
+        {
+          "step": "B. POST with token and client authentication",
+          "http_status": 200,
+          "transport_error": null,
+          "authenticated": true,
+          "error": null,
+          "active": true,
+          "fields_returned": [
+            "active",
+            "client_id",
+            "exp",
+            "iat",
+            "scope",
+            "sub",
+            "token_type"
+          ],
+          "body": {
+            "active": true,
+            "scope": "openid profile",
+            "client_id": "lab-client",
+            "token_type": "Bearer",
+            "sub": "lab-user-1",
+            "iat": 1700000000,
+            "exp": 9999999999
+          },
+          "internal_detail": []
+        },
+        {
+          "problems": [],
+          "disclosed_when_authenticated": [
+            "active",
+            "client_id",
+            "exp",
+            "iat",
+            "scope",
+            "sub",
+            "token_type"
+          ]
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 7662 s2.1, s2.2, s4"
+      ]
+    },
+    {
+      "check_id": "jwks-hygiene",
+      "title": "JWK Set hygiene",
+      "status": "PASS",
+      "check": "jwks",
+      "severity": "INFO",
+      "summary": "JWKS published 1 key(s), all public and adequately sized.",
+      "evidence": [
+        {
+          "jwks_uri": "https://localhost:54071/jwks.json",
+          "http_status": 200
+        },
+        {
+          "published_keys": [
+            {
+              "kty": "RSA",
+              "kid": "k-2026-01",
+              "alg": "RS256",
+              "use": "sig",
+              "crv": null,
+              "rsa_modulus_bits": 2048
+            }
+          ],
+          "key_count": 1
+        },
+        {
+          "internal_detail": []
+        },
+        {
+          "problems": []
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 7517",
+        "RFC 7518 s3.3",
+        "RFC 9700 s2.1"
+      ]
+    },
+    {
+      "check_id": "error-hygiene",
+      "title": "Error response hygiene and information disclosure",
+      "status": "PASS",
+      "check": "error-hygiene",
+      "severity": "INFO",
+      "summary": "All 4 malformed-request probe(s) produced clean, standard error responses with no implementation detail.",
+      "evidence": [
+        {
+          "probes": [
+            {
+              "probe": "authorization endpoint, unknown client_id",
+              "http_status": 400,
+              "body_snippet": "{\"error\": \"unauthorized_client\"}",
+              "internal_detail": [],
+              "server_header": "MockAS/0.1 Python/3.13.18",
+              "security_headers": {
+                "strict-transport-security": null,
+                "x-content-type-options": null,
+                "x-frame-options": null,
+                "content-security-policy": null
+              }
+            },
+            {
+              "probe": "authorization endpoint, missing required parameters",
+              "http_status": 400,
+              "body_snippet": "{\"error\": \"unauthorized_client\"}",
+              "internal_detail": [],
+              "server_header": "MockAS/0.1 Python/3.13.18",
+              "security_headers": {
+                "strict-transport-security": null,
+                "x-content-type-options": null,
+                "x-frame-options": null,
+                "content-security-policy": null
+              }
+            },
+            {
+              "probe": "authorization endpoint, unknown parameter pollution",
+              "http_status": 302,
+              "body_snippet": "",
+              "internal_detail": [],
+              "server_header": "MockAS/0.1 Python/3.13.18",
+              "security_headers": {
+                "strict-transport-security": null,
+                "x-content-type-options": null,
+                "x-frame-options": null,
+                "content-security-policy": null
+              }
+            },
+            {
+              "probe": "token endpoint, unsupported grant_type",
+              "http_status": 400,
+              "body_snippet": "{\"error\": \"unsupported_grant_type\"}",
+              "internal_detail": [],
+              "server_header": "MockAS/0.1 Python/3.13.18",
+              "security_headers": {
+                "strict-transport-security": null,
+                "x-content-type-options": null,
+                "x-frame-options": null,
+                "content-security-policy": null
+              }
+            }
+          ]
+        },
+        {
+          "problems": [],
+          "reachable_probes": 4,
+          "unreachable_probes": []
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 6749 s5.2",
+        "RFC 6819 s5.1.4"
+      ]
+    },
+    {
+      "check_id": "token-leakage-in-redirect",
+      "title": "Credentials exposed in redirect URLs",
+      "status": "PASS",
+      "check": "token-leakage",
+      "severity": "INFO",
+      "summary": "Inspected 17 client-bound redirect URL(s); no credential appeared where it should not, and state was echoed correctly.",
+      "evidence": [
+        {
+          "client_bound_redirects_inspected": 17
+        },
+        {
+          "credentials_in_query_component": []
+        },
+        {
+          "credentials_in_fragment_component": []
+        },
+        {
+          "state_handling_issues": []
+        }
+      ],
+      "recommendation": "No action required.",
+      "references": [
+        "RFC 9700 s2.1.1, s2.1.4",
+        "RFC 6749 s4.2.2, s10.3",
+        "RFC 6819 s5.2.3.4"
+      ]
+    }
+  ]
+}

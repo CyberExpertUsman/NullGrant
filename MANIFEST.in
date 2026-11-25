@@ -1,0 +1,12 @@
+include README.md
+include CHANGELOG.md
+include SECURITY.md
+include LICENSE
+include pyproject.toml
+include .editorconfig
+include nullgrant/py.typed
+include nullgrant.sh
+recursive-include tests *.sh
+recursive-include tests *.py
+recursive-include docs *.json *.html *.txt
+recursive-include .github *.yml

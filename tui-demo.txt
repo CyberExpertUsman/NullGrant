@@ -1,0 +1,53 @@
+  ╔╗╔ ╦ ╦ ╦   ╦   ╔═╗ ╦═╣ ╔═╗ ╔╗╔ ╔╦╗
+  ║║║ ║ ║ ║   ║   ║ ╦ ╠╦╝ ╠═╣ ║║║  ║
+  ╝╚╝ ╚═╝ ╩═╝ ╩═╝ ╚═╝ ╩╚═ ╩ ╩ ╝╚╝  ╩
+  NullGrant v1.0.0  ·  OAuth 2.0 / OIDC authorization server configuration audit
+  RFC 9700 · RFC 6749 · RFC 7636 · RFC 7662 · RFC 8414  ·  neon theme, truecolor 24-bit
+
+┌── TARGET ───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ issuer        http://127.0.0.1:58623                                                                        │
+│ client        lab-client  (public)                                                                          │
+│ redirect_uri  http://127.0.0.1:58623/cb                                                                     │
+│ authorize     http://127.0.0.1:58623/authorize                                                              │
+│ token         http://127.0.0.1:58623/token                                                                  │
+│ jwks          http://127.0.0.1:58623/jwks.json                                                              │
+│ metadata      ok http://127.0.0.1:58623/.well-known/openid-configuration                                    │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+── RUNNING 11 CHECKS ──────────────────────────────────────────────────────────────────────────────────────────
+  [✗] FAIL  discovery       TLS, discovery document and advertised capabilities  HIGH              0.0s
+  [✗] FAIL  redirect        Strict redirect_uri validation (open redirection)  CRITICAL          0.9s
+  [✗] FAIL  pkce            PKCE enforcement  CRITICAL          0.3s
+  [✗] FAIL  response-types  Supported response types  HIGH              0.4s
+  [✗] FAIL  token-auth      Token endpoint client authentication  HIGH              0.1s
+  [✓] PASS  state           State parameter handling  INFO              0.2s
+  [?] UNKN  refresh-reuse   Refresh token rotation and reuse detection  INFO              0.0s
+  [✗] FAIL  introspection   Token introspection endpoint behaviour  HIGH              0.1s
+  [✗] FAIL  jwks            JWK Set hygiene  CRITICAL          0.1s
+  [✗] FAIL  error-hygiene   Error response hygiene  MEDIUM            0.2s
+  [✗] FAIL  token-leakage   Credentials exposed in redirect URLs  CRITICAL          0.0s
+
+╔══ RESULTS ══════════════════════════════════════════════════════════════════════════════════════════════════╗
+│   CRITICAL 4   HIGH 4   MEDIUM 1                                                                            │
+│                                                                                                             │
+│   FAIL 9   WARN 0   PASS 1   UNKN 1                                                                         │
+│   ███████████████████████████████████████████████████████████████████████████████████████████████████████   │
+│                                                                                                             │
+│   11 checks · 44 requests · 2.3s                                                                            │
+│   AUDIT FAILED - findings require remediation                                                               │
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ [✗] FAIL  JWK Set hygiene                                                                                   │
+│   --checks jwks   check_id jwks-hygiene   severity CRITICAL                                                 │
+│                                                                                                             │
+│   5 problem(s) in the published JWK Set.                                                                    │
+│                                                                                                             │
+│   REMEDIATION                                                                                               │
+│   Publish only public key material, give every key a 'kid', use RSA >= 2048 bits or P-256+, never publish   │
+│   symmetric or private keys, and rotate on a defined schedule.                                              │
+│                                                                                                             │
+│   refs: RFC 7517, RFC 7518 s3.3, RFC 9700 s2.1                                                              │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  ... one panel per finding, failures first ...

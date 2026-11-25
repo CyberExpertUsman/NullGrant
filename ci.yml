@@ -1,0 +1,182 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  selftest:
+    name: self-test on py${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show environment
+        run: |
+          python --version
+          openssl version
+
+      # The tool has no third-party dependencies, so there is nothing to install.
+      - name: Verify the package imports
+        run: python -c "import nullgrant; print(nullgrant.__version__, len(nullgrant.CHECKS), 'checks')"
+
+      - name: Verify no third-party imports
+        run: |
+          python - <<'PY'
+          import ast, os, pathlib, sys, sysconfig
+          # sys.stdlib_module_names is Python 3.10+; the matrix also runs 3.8 and 3.9.
+          STDLIB = getattr(sys, "stdlib_module_names", None)
+          if not STDLIB:
+              import importlib.machinery
+              root = sysconfig.get_paths()["stdlib"]
+              suffixes = sorted(importlib.machinery.all_suffixes(), key=len, reverse=True)
+              STDLIB = set(sys.builtin_module_names) | {"__future__"}
+              # C extensions live in lib-dynload/, not in the stdlib root.
+              dirs = [root]
+              dyn = os.path.join(root, "lib-dynload")
+              if os.path.isdir(dyn):
+                  dirs.append(dyn)
+              for e in [x for d in dirs for x in os.listdir(d)]:
+                  if e == "__pycache__":
+                      continue
+                  for suf in suffixes:          # C extensions: unicodedata.cpython-3x-*.so
+                      if e.endswith(suf):
+                          e = e[:-len(suf)]
+                          break
+                  STDLIB.add(e)
+          allowed = set(STDLIB) | {"nullgrant"}
+          bad = []
+          for p in pathlib.Path("nullgrant").rglob("*.py"):
+              for n in ast.walk(ast.parse(p.read_text())):
+                  mods = []
+                  if isinstance(n, ast.Import):
+                      mods = [a.name.split(".")[0] for a in n.names]
+                  elif isinstance(n, ast.ImportFrom) and n.level == 0 and n.module:
+                      mods = [n.module.split(".")[0]]
+                  for m in mods:
+                      if m not in allowed:
+                          bad.append(f"{p}: {m}")
+          if bad:
+              print("non-stdlib imports found:"); print("\n".join(bad)); sys.exit(1)
+          print("OK: stdlib only")
+          PY
+
+      - name: Run the self-test (all build steps)
+        run: python tests/selftest.py
+
+      - name: Verify the authorisation gate refuses to run without consent
+        run: |
+          set +e
+          python -m nullgrant --issuer https://as.example.test \
+            --client-id c --redirect-uri https://a.test/cb --out /tmp/gate
+          rc=$?
+          set -e
+          test "$rc" = "3" || { echo "expected exit 3, got $rc"; exit 1; }
+          test ! -e /tmp/gate/nullgrant-report.json || { echo "gate wrote a report"; exit 1; }
+          echo "OK: gate exits 3 and writes nothing"
+
+      - name: Verify the single-file build is up to date
+        run: |
+          cp nullgrant.py /tmp/nullgrant.committed.py
+          python tools/build_singlefile.py
+          if ! cmp -s nullgrant.py /tmp/nullgrant.committed.py; then
+            echo "nullgrant.py is stale - run: python3 tools/build_singlefile.py"
+            diff -u /tmp/nullgrant.committed.py nullgrant.py | head -40
+            exit 1
+          fi
+          echo "OK: committed single file matches a fresh build"
+
+      - name: Verify the single-file build resolves every name
+        run: |
+          python - <<'PY'
+          import ast, builtins, sys
+          tree = ast.parse(open("nullgrant.py", encoding="utf-8").read())
+          bound = set(dir(builtins)) | {"__file__", "__name__", "__doc__", "__package__",
+                                        "__spec__", "__loader__", "__builtins__", "__class__"}
+          for n in ast.walk(tree):
+              if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                  bound.add(n.name)
+              elif isinstance(n, ast.Name) and isinstance(n.ctx, (ast.Store, ast.Del)):
+                  bound.add(n.id)
+              elif isinstance(n, ast.arg): bound.add(n.arg)
+              elif isinstance(n, ast.ExceptHandler) and n.name: bound.add(n.name)
+              elif isinstance(n, (ast.Global, ast.Nonlocal)): bound |= set(n.names)
+              elif isinstance(n, (ast.Import, ast.ImportFrom)):
+                  for a in n.names: bound.add(a.asname or a.name.split(".")[0])
+              elif isinstance(n, ast.comprehension) and isinstance(n.target, ast.Name):
+                  bound.add(n.target.id)
+          missing = sorted({n.id for n in ast.walk(tree)
+                            if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)
+                            and n.id not in bound})
+          if missing:
+              print("unresolved names in nullgrant.py:", missing); sys.exit(1)
+          print("OK: every name in the merged file resolves")
+          PY
+
+      - name: Run the self-test against the single-file build
+        run: |
+          mkdir -p /tmp/single/tests
+          cp nullgrant.py /tmp/single/
+          cp tests/selftest.py tests/mock_as.py /tmp/single/tests/
+          cd /tmp/single && python tests/selftest.py
+
+      - name: Verify the single file is behaviourally identical to the package
+        run: python tests/compare_singlefile.py
+
+      - name: Verify --dry-run sends nothing
+        run: |
+          python -m nullgrant --issuer https://as.example.test \
+            --client-id c --redirect-uri https://a.test/cb --dry-run | grep -q "DRY RUN"
+
+  shell:
+    name: launcher script
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: shellcheck (warning severity - both files are clean at all levels)
+        run: shellcheck --severity=warning nullgrant.sh tests/test_launcher.sh
+
+      - name: bash -n
+        run: bash -n nullgrant.sh && bash -n tests/test_launcher.sh
+
+      - name: Launcher works with no +x bit (GitHub web upload strips it)
+        run: bash nullgrant.sh --version | grep -q NullGrant
+
+      - name: "Launcher behaviour: both layouts, symlinks, cwd, exit codes (31 cases)"
+        run: bash tests/test_launcher.sh
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install ruff
+      - name: Compile every module
+        run: python -m compileall -q nullgrant tests tools nullgrant.py
+
+      # E9 is the syntax gate. --target-version py38 makes ruff reject syntax that only
+      # parses on a newer interpreter - e.g. a multi-line expression inside a single-quoted
+      # f-string, which PEP 701 legalised in 3.12 and which silently breaks the whole import
+      # chain on 3.8-3.11. This job runs on 3.13, so without the flag the bug is invisible.
+      - name: "ruff: py38 syntax (E9) + pyflakes (F), all sources"
+        run: ruff check --select E9,F --target-version py38 nullgrant tests tools nullgrant.py
